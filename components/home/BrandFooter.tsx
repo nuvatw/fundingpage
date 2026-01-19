@@ -61,11 +61,6 @@ export function BrandFooter() {
                     nuvaClub
                   </Link>
                 </li>
-                <li>
-                  <Link href="/restaurant" className="hover:text-white transition-colors">
-                    餐飲 AI 課程
-                  </Link>
-                </li>
               </ul>
             </div>
           </div>
