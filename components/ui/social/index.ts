@@ -1,0 +1,1 @@
+export { SocialContactIcons } from './SocialContactIcons';
