@@ -1,12 +1,15 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  );
-}
+// Don't throw at module load time - check at runtime instead
+const getMongoUri = () => {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error(
+      'Please define the MONGODB_URI environment variable inside .env.local'
+    );
+  }
+  return uri;
+};
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
@@ -51,7 +54,7 @@ async function dbConnect(): Promise<typeof mongoose> {
       retryReads: true,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(getMongoUri(), opts).then((mongoose) => {
       if (process.env.NODE_ENV === 'development') {
         console.log('MongoDB connected successfully');
       }
